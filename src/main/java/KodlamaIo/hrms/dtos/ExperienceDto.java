@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 
 @Data
 public class ExperienceDto {
-
-
     public Experience createExperienceObject(ExperienceCreateRequest experienceRequest, JobSeekerCv jobSeekerCv) {
         return Experience.builder().workplaceName(experienceRequest.getWorkplaceName())
                 .jobPosition(experienceRequest.getJobPosition())

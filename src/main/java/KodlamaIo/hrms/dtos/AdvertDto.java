@@ -32,7 +32,6 @@ public class AdvertDto {
                 .jobCondition(true)
                 .workType(workType).build();
 
-
     }
 
 }

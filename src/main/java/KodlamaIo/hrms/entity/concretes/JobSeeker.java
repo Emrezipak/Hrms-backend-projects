@@ -32,7 +32,7 @@ public class JobSeeker extends User {
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate birthYear;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	@OneToMany(mappedBy = "jobSeeker")
 	private List<JobSeekerCv> jobSeekerCv;
 
@@ -40,5 +40,9 @@ public class JobSeeker extends User {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@JoinColumn(name="image")
 	private Image image;
+
+	@OneToMany(mappedBy = "jobSeeker")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private List<FavoriteAdvert> favoriteAdvertList;
 
 }

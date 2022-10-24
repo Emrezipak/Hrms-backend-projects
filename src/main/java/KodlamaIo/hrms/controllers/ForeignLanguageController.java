@@ -16,7 +16,6 @@ import KodlamaIo.hrms.entity.concretes.ForeignLanguage;
 public class ForeignLanguageController {
 	
 	private ForeignLanguageService languageService;
-	@Autowired
 	public ForeignLanguageController(ForeignLanguageService languageService) {
 		this.languageService = languageService;
 	}

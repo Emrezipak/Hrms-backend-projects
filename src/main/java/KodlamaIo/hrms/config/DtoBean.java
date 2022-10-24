@@ -1,9 +1,6 @@
 package KodlamaIo.hrms.config;
 
-import KodlamaIo.hrms.dtos.AdvertDto;
-import KodlamaIo.hrms.dtos.BaseCvDto;
-import KodlamaIo.hrms.dtos.ExperienceDto;
-import KodlamaIo.hrms.dtos.SchoolDto;
+import KodlamaIo.hrms.dtos.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,6 +25,11 @@ public class DtoBean {
     @Bean
     public AdvertDto baseAdvertDto(){
         return new AdvertDto();
+    }
+
+    @Bean
+    public FavoriteAdvertDto favoriteAdvertDto(){
+        return new FavoriteAdvertDto();
     }
 
 

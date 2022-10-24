@@ -2,6 +2,7 @@ package KodlamaIo.hrms.entity.concretes;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.*;
@@ -69,10 +70,7 @@ public class JobAdvertisement {
     @JoinColumn(name = "work_type_id")
     private WorkType workType;
 
-    @ManyToMany
-    @JoinTable(name = "favorite_advert",
-            joinColumns = @JoinColumn(name = "advert_id"),
-            inverseJoinColumns = @JoinColumn(name = "favorite_id"))
-    private Set<FavoriteAdvert> favoriteAdverts;
+    @OneToMany(mappedBy = "jobAdvertisement")
+    private List<FavoriteAdvert> favoriteAdverts;
 
 }

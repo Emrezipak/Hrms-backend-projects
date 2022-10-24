@@ -8,7 +8,6 @@ import lombok.Data;
 
 @Data
 public class SchoolDto {
-
     public School createSchoolObject(SchoolCreateRequest schoolCreateRequest, JobSeekerCv jobSeekerCv) {
         return School.builder().schoolName(schoolCreateRequest.getSchoolName())
                 .departmentName(schoolCreateRequest.getDepartmentName())

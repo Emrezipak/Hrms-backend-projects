@@ -1,6 +1,7 @@
 package KodlamaIo.hrms.entity.concretes;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class FavoriteAdvert {
 
     @Id
@@ -19,6 +21,11 @@ public class FavoriteAdvert {
     @Column(name="favorite_id")
     private Long id;
 
-    @ManyToMany
-    private Set<JobAdvertisement> jobAdvertisementList;
+    @ManyToOne
+    @JoinColumn(name="advert_id")
+    private JobAdvertisement jobAdvertisement;
+
+    @ManyToOne
+    @JoinColumn(name = "job_seeker_id")
+    private JobSeeker jobSeeker;
 }
