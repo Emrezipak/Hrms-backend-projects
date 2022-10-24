@@ -1,7 +1,5 @@
 package KodlamaIo.hrms.core.mernis.concretes;
 
-
-import KodlamaIo.mernis.SQRKPSPublicSoap;
 import org.springframework.stereotype.Service;
 
 import KodlamaIo.hrms.core.mernis.abstracts.MernisService;
@@ -12,6 +10,7 @@ public class MernisAdapter implements MernisService{
 
 	@Override
 	public boolean checkMernisService(JobSeeker jobSeeker) {
+		/*
 		SQRKPSPublicSoap mernisService = new SQRKPSPublicSoap();
 		Long identificationNo = Long.valueOf(jobSeeker.getIdentificationNo());
 		Integer birthYear = jobSeeker.getBirthYear().getYear();
@@ -21,6 +20,8 @@ public class MernisAdapter implements MernisService{
 		} catch (Exception e) {
 			return false;
 		}
+		 */
+		return true;
 	}
 
 }
