@@ -21,7 +21,7 @@ public class CityController {
     }
 
     @GetMapping("/getAllCity")
-    public DataResult<List<City>> getAllCity() {
+    public Result getAllCity() {
         return this.cityService.getAllCity();
     }
 
@@ -31,7 +31,7 @@ public class CityController {
     }
 
     @GetMapping("/getByCityId")
-    public DataResult<City> getCityByCityName(@RequestParam String cityName) {
+    public Result getCityByCityName(@RequestParam String cityName) {
         return this.cityService.getCityByCityName(cityName);
     }
 
@@ -41,7 +41,7 @@ public class CityController {
     }
 
     @PutMapping("/updateCity/{id}")
-    public DataResult<City> updateCity(@PathVariable long id, @RequestBody City city) {
+    public Result updateCity(@PathVariable long id, @RequestBody City city) {
         return this.cityService.updateCity(id, city);
     }
 }

@@ -18,31 +18,31 @@ import javax.validation.Valid;
 @CrossOrigin
 public class ExperienceController {
 
-	private ExperienceService experienceService;
+    private ExperienceService experienceService;
 
-	public ExperienceController(ExperienceService experienceService) {
-		this.experienceService = experienceService;
-	}
-	
-	@PostMapping("/addExperience")
-	public Result save(@RequestBody @Valid ExperienceCreateRequest skill) {
-		return this.experienceService.add(skill);
-	}
-	
-	
-	@GetMapping("/getByStartsExperienceYear")
-	public DataResult<List<Experience>> getByFinishYearCv(@RequestParam Long id) {
-		return this.experienceService.getByFinishYearCv(id);
-	}
+    public ExperienceController(ExperienceService experienceService) {
+        this.experienceService = experienceService;
+    }
 
-	@GetMapping("/getAllExperience")
-	public DataResult<List<Experience>> getAllExperience(){
-		return this.experienceService.getAllExperience();
-	}
+    @PostMapping("/addExperience")
+    public Result save(@RequestBody @Valid ExperienceCreateRequest skill) {
+        return this.experienceService.add(skill);
+    }
 
-	@DeleteMapping("/deleteExperienceById")
-	public Result deleteExperience(@RequestParam(name = "experienceId") Long experienceId){
-		return experienceService.deleteExperience(experienceId);
-	}
+
+    @GetMapping("/getByStartsExperienceYear")
+    public Result getByFinishYearCv(@RequestParam Long id) {
+        return this.experienceService.getByFinishYearCv(id);
+    }
+
+    @GetMapping("/getAllExperience")
+    public Result getAllExperience() {
+        return this.experienceService.getAllExperience();
+    }
+
+    @DeleteMapping("/deleteExperienceById")
+    public Result deleteExperience(@RequestParam(name = "experienceId") Long experienceId) {
+        return experienceService.deleteExperience(experienceId);
+    }
 
 }

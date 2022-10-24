@@ -3,9 +3,7 @@ package KodlamaIo.hrms.business.imp;
 import KodlamaIo.hrms.business.abstracts.FavoriteAdvertService;
 import KodlamaIo.hrms.business.abstracts.JobAdvertisementService;
 import KodlamaIo.hrms.business.abstracts.JobSeekerService;
-import KodlamaIo.hrms.core.utilities.results.DataResult;
-import KodlamaIo.hrms.core.utilities.results.ErrorDataResult;
-import KodlamaIo.hrms.core.utilities.results.SuccessDataResult;
+import KodlamaIo.hrms.core.utilities.results.*;
 import KodlamaIo.hrms.dataAccess.FavoriteAdvertDao;
 import KodlamaIo.hrms.dtos.FavoriteAdvertDto;
 import KodlamaIo.hrms.entity.concretes.FavoriteAdvert;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class FavoriteAdvertManager implements FavoriteAdvertService {
@@ -40,43 +39,63 @@ public class FavoriteAdvertManager implements FavoriteAdvertService {
 
     @Override
     public DataResult<List<FavoriteAdvert>> getAllFavoriteAdvert() {
-        return null;
+        return new SuccessDataResult(favoriteAdvertDao.findAll(),"Success");
     }
 
     @Override
     public DataResult<FavoriteAdvert> addFavorite(FavoriteAdvertRequest favoriteAdvertRequest) {
         DataResult<JobAdvertisement> jobAdvertisement = jobAdvertisementService.getAdvertById(favoriteAdvertRequest.getAdvertsId());
-        DataResult<JobSeeker> jobSeeker = jobSeekerService.getById(favoriteAdvertRequest.getAdvertsId());
+        DataResult<JobSeeker> jobSeeker = jobSeekerService.getJobSeekerByEmail(favoriteAdvertRequest.getJobSeekerEmail());
+        List<FavoriteAdvert> favoriteAdverts = favoriteAdvertDao.getFavoriteAdvertByJobSeeker_Email(favoriteAdvertRequest.getJobSeekerEmail());
+        Optional<FavoriteAdvert> duplicateFavoriteAdvert = favoriteContainsAdvertId(favoriteAdverts,
+                favoriteAdvertRequest.getAdvertsId());
+
         if (!jobAdvertisement.isSuccess()) {
             return new ErrorDataResult("not found advert");
-        }
-        else if (!jobSeeker.isSuccess()) {
+        } else if (!jobSeeker.isSuccess()) {
             return new ErrorDataResult("not found user");
+        } else if (duplicateFavoriteAdvert.isPresent()) {
+            favoriteAdvertDao.deleteById(duplicateFavoriteAdvert.get().getId());
+            return new ErrorDataResult("removed from favorites");
         }
+
         FavoriteAdvert favoriteAdvert = favoriteRequestToDto(jobAdvertisement.getData(), jobSeeker.getData());
         favoriteAdvertDao.save(favoriteAdvert);
-        return new SuccessDataResult("the advert added to favorite");
+        return new SuccessDataResult(createFavoriteResponse(favoriteAdvert), "the advert added to favorite");
     }
 
     @Override
-    public DataResult<FavoriteAdvert> deleteFavorite() {
-        return null;
-    }
-
-    @Override
-    public DataResult<List<FavoriteAdvert>> getFavoriteAdvertByJobSeekerEmail(String email) {
-        DataResult<JobSeeker> jobSeeker = jobSeekerService.getJobSeekerByEmail(email);
-        if (jobSeeker.isSuccess()) {
-            return new SuccessDataResult(favoriteAdvertDao.getFavoriteAdvertByJobSeeker_Email(email), "Success");
+    public Result deleteFavorite(Long id) {
+        Optional<FavoriteAdvert> favoriteAdvert = favoriteAdvertDao.findById(id);
+        if (!favoriteAdvert.isPresent()) {
+            return new ErrorResult("not found favorite");
         }
-        return new ErrorDataResult("not found user");
+        favoriteAdvertDao.deleteById(id);
+        return new SuccessResult("removed favorite");
     }
 
-    private FavoriteAdvert favoriteRequestToDto(JobAdvertisement jobAdvertisement,JobSeeker jobSeeker){
-        return favoriteAdvertDto.getFavoriteAdvert(jobAdvertisement,jobSeeker);
+    @Override
+    public DataResult<List<FavoriteAdvertResponse>> getFavoriteAdvertByJobSeekerEmail(String email) {
+        DataResult<JobSeeker> jobSeeker = jobSeekerService.getJobSeekerByEmail(email);
+        if (!jobSeeker.isSuccess()) {
+            return new ErrorDataResult("not found user");
+        }
+        return new SuccessDataResult(favoriteAdvertDao.getFavoriteAdvertByJobSeeker_Email(email).stream().map(
+                favoriteAdvert -> createFavoriteResponse(favoriteAdvert)), "Success");
     }
-    private FavoriteAdvertResponse createFavoriteResponse(FavoriteAdvert favoriteAdvert){
-        return FavoriteAdvertResponse.builder().
-                favoriteId(favoriteAdvert.getId()).build();
+
+    private FavoriteAdvert favoriteRequestToDto(JobAdvertisement jobAdvertisement, JobSeeker jobSeeker) {
+        return favoriteAdvertDto.getFavoriteAdvert(jobAdvertisement, jobSeeker);
+    }
+
+    private FavoriteAdvertResponse createFavoriteResponse(FavoriteAdvert favoriteAdvert) {
+        return FavoriteAdvertResponse.builder()
+                .favoriteId(favoriteAdvert.getId())
+                .jobAdvertisement(favoriteAdvert.getJobAdvertisement())
+                .email(favoriteAdvert.getJobSeeker().getEmail()).build();
+    }
+
+    private Optional<FavoriteAdvert> favoriteContainsAdvertId(List<FavoriteAdvert> favoriteAdverts, Long id) {
+        return favoriteAdverts.stream().filter(advert -> advert.getJobAdvertisement().getId() == id).findAny();
     }
 }

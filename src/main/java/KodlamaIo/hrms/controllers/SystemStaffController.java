@@ -21,18 +21,18 @@ public class SystemStaffController {
     }
 
     @PostMapping("/addSystemStaff")
-    public DataResult<SystemStaff> save(@RequestBody @Valid SystemStaff systemStaff) {
+    public Result save(@RequestBody @Valid SystemStaff systemStaff) {
         return systemStaffService.addSystemStaff(systemStaff);
     }
 
     @PutMapping("/updateSystemStaff")
-    public DataResult<SystemStaff> updateSystemStaff(@RequestBody @Valid SystemStaffUpdateRequest systemStaff,
-                                                     @RequestParam(name = "email") String email) {
+    public Result updateSystemStaff(@RequestBody @Valid SystemStaffUpdateRequest systemStaff,
+                                    @RequestParam(name = "email") String email) {
         return systemStaffService.updateSystemStaffByEmail(email, systemStaff);
     }
 
     @PutMapping("/changeStatusOfAdvert")
-    public Result changeStatusOfAdvert(@RequestParam(name="id") Long id) {
+    public Result changeStatusOfAdvert(@RequestParam(name = "id") Long id) {
         return systemStaffService.approvalToAdverts(id);
     }
 }

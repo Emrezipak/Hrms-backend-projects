@@ -15,30 +15,30 @@ import KodlamaIo.hrms.entity.concretes.JobPosition;
 @CrossOrigin
 public class JobPositionController {
 
-	private JobPositionService jobPositionService;
+    private JobPositionService jobPositionService;
 
-	public JobPositionController(JobPositionService jobPositionService) {
-		this.jobPositionService = jobPositionService;
-	}
-	
-	@GetMapping("/getAllJobPosition")
-	public DataResult<List<JobPosition>> getAllJobPosition(){
-		return jobPositionService.getAllJobPosition();
-	}
-	
-	@PostMapping("/addJobPosition")
-	public Result addJobPosition(@RequestBody JobPosition jobPosition) {
-		return this.jobPositionService.addJobPosition(jobPosition);
-	}
+    public JobPositionController(JobPositionService jobPositionService) {
+        this.jobPositionService = jobPositionService;
+    }
 
-	@DeleteMapping("/deleteJobPosition/{id}")
-	public Result deleteJobPosition(@PathVariable Long id){
-		return this.jobPositionService.deleteJobPosition(id);
-	}
+    @GetMapping("/getAllJobPosition")
+    public Result getAllJobPosition() {
+        return jobPositionService.getAllJobPosition();
+    }
 
-	@GetMapping("/getJobPositionByJobName")
-	public DataResult<List<JobPosition>> getJobPositionByJobName(@RequestParam String jobName){
-		return this.jobPositionService.getJobPositionsByJobNameIsLike(jobName);
-	}
-	
+    @PostMapping("/addJobPosition")
+    public Result addJobPosition(@RequestBody JobPosition jobPosition) {
+        return this.jobPositionService.addJobPosition(jobPosition);
+    }
+
+    @DeleteMapping("/deleteJobPosition/{id}")
+    public Result deleteJobPosition(@PathVariable Long id) {
+        return this.jobPositionService.deleteJobPosition(id);
+    }
+
+    @GetMapping("/getJobPositionByJobName")
+    public Result getJobPositionByJobName(@RequestParam String jobName) {
+        return this.jobPositionService.getJobPositionsByJobNameIsLike(jobName);
+    }
+
 }

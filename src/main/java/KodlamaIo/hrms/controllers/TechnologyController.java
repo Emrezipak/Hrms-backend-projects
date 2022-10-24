@@ -17,23 +17,24 @@ import javax.validation.Valid;
 @RequestMapping("api/technology")
 @CrossOrigin
 public class TechnologyController {
-	
-	private TechnologyService technologyService;
-	public TechnologyController(TechnologyService technologyService) {
-		this.technologyService = technologyService;
-	}
+
+    private TechnologyService technologyService;
+
+    public TechnologyController(TechnologyService technologyService) {
+        this.technologyService = technologyService;
+    }
 
 
-	@PostMapping("/addNewSkill")
-	public Result add(@RequestBody @Valid Technology skill) {
-		return this.technologyService.add(skill);
-	}
+    @PostMapping("/addNewSkill")
+    public Result add(@RequestBody @Valid Technology skill) {
+        return this.technologyService.add(skill);
+    }
 
-	
-	@GetMapping("/getAllSkills")
-	public DataResult<List<Technology>> getAll() {
-		return this.technologyService.getAllTechnologies();
-	}
+
+    @GetMapping("/getAllSkills")
+    public Result getAll() {
+        return this.technologyService.getAllTechnologies();
+    }
 
 
 }

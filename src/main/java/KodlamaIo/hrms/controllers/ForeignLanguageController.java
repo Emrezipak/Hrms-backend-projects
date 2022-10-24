@@ -14,21 +14,22 @@ import KodlamaIo.hrms.entity.concretes.ForeignLanguage;
 @RequestMapping("api/foreignlanguage")
 @CrossOrigin
 public class ForeignLanguageController {
-	
-	private ForeignLanguageService languageService;
-	public ForeignLanguageController(ForeignLanguageService languageService) {
-		this.languageService = languageService;
-	}
-	
-	@PostMapping("/addLanguage")
-	public Result add(@RequestBody ForeignLanguage language) {
-		return this.languageService.add(language);
-	}
-	
-	@GetMapping("/getAllLanguage")
-	public DataResult<List<ForeignLanguage>> getAll(){
-		return this.languageService.getAllForeignLanguages();
-	}
-	
+
+    private ForeignLanguageService languageService;
+
+    public ForeignLanguageController(ForeignLanguageService languageService) {
+        this.languageService = languageService;
+    }
+
+    @PostMapping("/addLanguage")
+    public Result add(@RequestBody ForeignLanguage language) {
+        return this.languageService.add(language);
+    }
+
+    @GetMapping("/getAllLanguage")
+    public Result getAll() {
+        return this.languageService.getAllForeignLanguages();
+    }
+
 
 }

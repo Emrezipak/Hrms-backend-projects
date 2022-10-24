@@ -26,9 +26,9 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/getAllAdvert")
-    public DataResult<Page<AdvertResponse>> getAllAdvert(@RequestParam(name = "page",defaultValue = "1")
+    public DataResult<Page<AdvertResponse>> getAllAdvert(@RequestParam(name = "page", defaultValue = "1")
                                                          Integer page,
-                                                         @RequestParam(name = "size",defaultValue = "10")
+                                                         @RequestParam(name = "size", defaultValue = "10")
                                                          Integer size) {
         return this.jobAdvertisementService.getAllAdvert(page, size);
     }
@@ -45,7 +45,7 @@ public class JobAdvertisementController {
     }
 
     @GetMapping("/changeStatusOfJobAdvert")
-    public DataResult<AdvertResponse> changeStatusOfJobAdvert(@RequestParam(name = "id") long id) {
+    public Result changeStatusOfJobAdvert(@RequestParam(name = "id") long id) {
         return this.jobAdvertisementService.changeStatusOfJobAdvert(id);
     }
 

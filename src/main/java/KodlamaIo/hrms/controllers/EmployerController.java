@@ -23,7 +23,7 @@ public class EmployerController {
     }
 
     @GetMapping("/getAllEmployer")
-    public DataResult<List<Employer>> getAll() {
+    public Result getAll() {
         return this.employerService.getAll();
     }
 
@@ -38,12 +38,12 @@ public class EmployerController {
     }
 
     @PutMapping("/updateEmployer")
-    public DataResult<Employer> updateEmployer(@RequestParam Long id, @RequestBody Employer employer) {
+    public Result updateEmployer(@RequestParam Long id, @RequestBody Employer employer) {
         return this.employerService.updateEmployer(id, employer);
     }
 
     @GetMapping("/getEmployerByCompanyName")
-    public DataResult<List<Employer>> updateEmployer(@RequestParam String companyName) {
+    public Result updateEmployer(@RequestParam String companyName) {
         return this.employerService.getEmployerByCompanyName(companyName);
     }
 

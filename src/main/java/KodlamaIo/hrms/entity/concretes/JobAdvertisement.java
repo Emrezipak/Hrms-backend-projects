@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Entity
@@ -69,8 +70,5 @@ public class JobAdvertisement {
     @OneToOne
     @JoinColumn(name = "work_type_id")
     private WorkType workType;
-
-    @OneToMany(mappedBy = "jobAdvertisement")
-    private List<FavoriteAdvert> favoriteAdverts;
 
 }

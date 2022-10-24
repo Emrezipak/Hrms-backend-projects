@@ -11,30 +11,31 @@ import KodlamaIo.hrms.entity.concretes.Image;
 import KodlamaIo.hrms.entity.concretes.JobSeeker;
 
 @RestController
-@RequestMapping(value="api/image")
+@RequestMapping(value = "api/image")
 @CrossOrigin
 public class ImageController {
-	
-	private ImageService imageService;
-	public ImageController(ImageService imageService) {
-		this.imageService = imageService;
-	}
-    
-    @PostMapping("/addImageToCv")
-	public Result add(@RequestParam(name = "cvId") Long id,
-					  @RequestParam(name = "image") MultipartFile file) {
-    	return this.imageService.addImage(id,file);
-    }
-    
-    @DeleteMapping("/deleteImage")
-	public Result deleteImage(@RequestParam(name="imageId") Long id) {
 
-    	return this.imageService.deleteImageById(id);
+    private ImageService imageService;
+
+    public ImageController(ImageService imageService) {
+        this.imageService = imageService;
     }
-    
+
+    @PostMapping("/addImageToCv")
+    public Result add(@RequestParam(name = "cvId") Long id,
+                      @RequestParam(name = "image") MultipartFile file) {
+        return this.imageService.addImage(id, file);
+    }
+
+    @DeleteMapping("/deleteImage")
+    public Result deleteImage(@RequestParam(name = "imageId") Long id) {
+
+        return this.imageService.deleteImageById(id);
+    }
+
     @GetMapping("/getImageById")
-	public Result getByJobSeeker_id(@RequestParam(name = "imageId") Long id) {
-    	return this.imageService.getByJobSeeker_id(id);
+    public Result getByJobSeeker_id(@RequestParam(name = "imageId") Long id) {
+        return this.imageService.getByJobSeeker_id(id);
     }
 
 }

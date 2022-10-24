@@ -18,29 +18,30 @@ import javax.validation.Valid;
 @CrossOrigin
 public class SchoolController {
 
-	private SchoolService schoolService;
-	
-	public SchoolController(SchoolService schoolService) {
-		this.schoolService = schoolService;
-	}
-	
-	@PostMapping("/addSchool")
-	public DataResult<School> save(@RequestBody @Valid SchoolCreateRequest school) {
-		return this.schoolService.addSchoolInformation(school);
-	}
-	
-	@GetMapping("/getByStartsSchoolYear")
-	public DataResult<List<School>> getByStartsSchoolYear(@RequestParam Long id) {
+    private SchoolService schoolService;
 
-		return this.schoolService.getByFinishSchoolYear(id);
-	}
+    public SchoolController(SchoolService schoolService) {
+        this.schoolService = schoolService;
+    }
 
-	@GetMapping("/getAllSchool")
-	public DataResult<List<School>> getAllSchool(){
-		return this.schoolService.getAllSchool();
-	}
-	@DeleteMapping("/deleteSchool")
-	public Result deleteSchool(@RequestParam(name = "schoolId") Long schoolId){
-		return this.schoolService.deleteSchool(schoolId);
-	}
+    @PostMapping("/addSchool")
+    public Result save(@RequestBody @Valid SchoolCreateRequest school) {
+        return this.schoolService.addSchoolInformation(school);
+    }
+
+    @GetMapping("/getByStartsSchoolYear")
+    public Result getByStartsSchoolYear(@RequestParam Long id) {
+
+        return this.schoolService.getByFinishSchoolYear(id);
+    }
+
+    @GetMapping("/getAllSchool")
+    public Result getAllSchool() {
+        return this.schoolService.getAllSchool();
+    }
+
+    @DeleteMapping("/deleteSchool")
+    public Result deleteSchool(@RequestParam(name = "schoolId") Long schoolId) {
+        return this.schoolService.deleteSchool(schoolId);
+    }
 }

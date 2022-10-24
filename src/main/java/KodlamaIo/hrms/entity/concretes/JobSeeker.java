@@ -40,9 +40,4 @@ public class JobSeeker extends User {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@JoinColumn(name="image")
 	private Image image;
-
-	@OneToMany(mappedBy = "jobSeeker")
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	private List<FavoriteAdvert> favoriteAdvertList;
-
 }

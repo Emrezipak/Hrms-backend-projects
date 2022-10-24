@@ -17,31 +17,34 @@ import javax.validation.Valid;
 @CrossOrigin
 public class JobSeekerController {
 
-	private JobSeekerService jobSeekerService;
+    private JobSeekerService jobSeekerService;
 
-	public JobSeekerController(JobSeekerService jobSeekerService) {
-		this.jobSeekerService = jobSeekerService;
-	}
-    
+    public JobSeekerController(JobSeekerService jobSeekerService) {
+        this.jobSeekerService = jobSeekerService;
+    }
+
     @GetMapping("/getAllJobSeekers")
-    public DataResult<List<JobSeeker>> getAll(){
-    	return this.jobSeekerService.getAllJobSeeker();
+    public Result getAll() {
+        return this.jobSeekerService.getAllJobSeeker();
     }
 
     @PostMapping("/addJobSeeker")
     public Result add(@RequestBody @Valid JobSeeker jobSeeker) {
-    	return this.jobSeekerService.save(jobSeeker);
+        return this.jobSeekerService.save(jobSeeker);
     }
+
     @GetMapping("/getJobSeekerByEmail")
-    public DataResult<JobSeeker> getJobSeekerByEmail(@RequestParam String email){
+    public Result getJobSeekerByEmail(@RequestParam String email) {
         return this.jobSeekerService.getJobSeekerByEmail(email);
     }
+
     @GetMapping("/getJobSeekerByIdentificationNo")
-    public DataResult<JobSeeker> getJobSeekerByIdentificationNo(@RequestParam String IdentificationNo){
+    public Result getJobSeekerByIdentificationNo(@RequestParam String IdentificationNo) {
         return this.jobSeekerService.getJobSeekerByIdentificationNo(IdentificationNo);
     }
+
     @DeleteMapping("/deleteJobSeekerByEmail")
-    public Result deleteJobSeekerByEmail(@RequestParam String email){
+    public Result deleteJobSeekerByEmail(@RequestParam String email) {
         return this.jobSeekerService.deleteJobSeekerByEmail(email);
     }
 
